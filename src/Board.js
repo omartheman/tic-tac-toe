@@ -12,18 +12,6 @@ class Board extends React.Component {
     }
     this.handleClick = this.handleClick.bind(this);
   }
-  handleClick(i){
-    const squares = this.state.squares.slice(); 
-    const history = this.state.history.slice();
-    //stop here, last i did was make the tic tac toe winner message work, and deactivated clicking once a square was filled
-    if (calculateWinner(squares) || squares[i]){return}
-    squares[i] = this.state.xIsNext ? "X" : "O";
-    this.setState({
-      squares,
-      xIsNext: !this.state.xIsNext,
-      history: [...history, {squares: squares}]
-    }, ()=>{console.log('history',this.state.history)})
-  }
   renderSquare(i) {
     return (
       <Square 

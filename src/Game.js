@@ -10,6 +10,24 @@ class Game extends React.Component {
       history: []
     }
   }
+  //To Do to lift state:
+  // 1. Move relevant functions if necessary
+  // 2. Pass state as props to relevant components 
+  // 3. Change "this.state...." to "this.props..." in Board Component
+  
+  handleClick(i){
+    const squares = this.state.squares.slice(); 
+    const history = this.state.history.slice();
+    //state needs to be set so that Game gets info about "squares"
+    //since handleClick needs to be used to set the state of "squares", handleClick needs to be lifted. 
+    if (calculateWinner(squares) || squares[i]){return}
+    squares[i] = this.state.xIsNext ? "X" : "O";
+    this.setState({
+      squares,
+      xIsNext: !this.state.xIsNext,
+      history: [...history, {squares: squares}]
+    }, ()=>{console.log('history',this.state.history)})
+  }
   render() {
     return (
       <div className="game">
