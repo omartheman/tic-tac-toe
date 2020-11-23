@@ -6,6 +6,7 @@ class Game extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
+          <h2>Heyder Britt, wanna play sum tiktakto?</h2>
           <Board />
         </div>
         <div className="game-info">
