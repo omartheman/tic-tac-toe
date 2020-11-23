@@ -2,6 +2,14 @@ import React from 'react';
 import Board from './Board';
 
 class Game extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+      xIsNext: true,
+      history: []
+    }
+  }
   render() {
     return (
       <div className="game">

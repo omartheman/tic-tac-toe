@@ -9,7 +9,6 @@ class Board extends React.Component {
       squares: Array(9).fill(null),
       xIsNext: true,
       history: []
-      //after each move, on handleClick, store the current state of the board (this.state.squares) in history.
     }
     this.handleClick = this.handleClick.bind(this);
   }
@@ -22,7 +21,8 @@ class Board extends React.Component {
     this.setState({
       squares,
       xIsNext: !this.state.xIsNext,
-    })
+      history: [...history, {squares: squares}]
+    }, ()=>{console.log('history',this.state.history)})
   }
   renderSquare(i) {
     return (
