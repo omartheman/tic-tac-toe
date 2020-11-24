@@ -1,8 +1,8 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
-  background-color: pink !important;
   background: linear-gradient(#de64e6, #a8afff);
+  min-height: 650px;
 }
 
 ol, ul {
@@ -14,11 +14,22 @@ ol, ul {
   content: "";
   display: table;
 }
+@media (max-width: 600px){
+  .board-row {
+    width: fit-content;
+    margin: auto;
+  }
+}
+
 .status {
   margin-bottom: 10px;
   font-size: 25px;
 }
-
+@media (max-width: 600px){
+  .status, h1 {
+    text-align:center;
+  }
+}
 :root{
   --squares: 68px;
 }

@@ -52,7 +52,7 @@ class Game extends React.Component {
     ))
 
     return (
-      <div className="mt-3 ml-3 container">
+      <div className="container">
         <h1>Tic-Tac-Toe</h1>
         <div className="game container mt-5">
           <div className="game-board">
