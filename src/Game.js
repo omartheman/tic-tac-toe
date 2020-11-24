@@ -1,46 +1,50 @@
 import React from 'react';
 import Board from './Board';
 
-// STOP: Display different states of game on click. 
-// 1. List each phase of game next to board
-// 2. When you click on one of the phases, make board go back to that phase.
-//    a. If you click on a square after going back to a phase "X", delete all phases that came after phase you clicked on, and continue game from phase "X"
-// 3. Create a button for each phase. Give these buttons a unique id, so you can click on them and go back to a certain phase. 
-// 4. When you click on a phase button, set the state of the board to be that phase.
-//    a. The selected phase has id "i", which corresponds to the index of "this.state.history" that matches the phase. 
-//    b. When you click on phase 1, use this.state.history[i].
+//If you time-travel and then click on a square, delete all history after clicked phase.
+
 class Game extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       squares: Array(9).fill(null),
       xIsNext: true,
-      history: []
+      history: [],
+      currentPhase: null
     }
     this.handleClick = this.handleClick.bind(this);
+    this.returnToPhase = this.returnToPhase.bind(this);
   }
   handleClick(i){
     const squares = this.state.squares.slice(); 
-    const history = this.state.history.slice();
+    let {currentPhase} = this.state;
+    currentPhase++;
+    console.log('currentphase', currentPhase)
+    const history = this.state.history.slice(0, currentPhase);
     if (calculateWinner(squares) || squares[i]){return}
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
       squares,
       xIsNext: !this.state.xIsNext,
-      history: [...history, {squares: squares}]
-    }, ()=>{console.log('history',this.state.history)})
+      history: [...history, {squares: squares}],
+      currentPhase: history.length
+    })
+  }
+  returnToPhase(i){
+    const {history} = this.state;
+    this.setState({
+      squares: history[i].squares,
+      currentPhase: i
+    });
   }
   render() {
     const {squares, history} = this.state;
     let status = calculateWinner(squares) ? `Winner is: ${calculateWinner(squares)}` : `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
-    //add onClick to each phase, so that you can set state to correct history point.
     const phases =  history.map((e, i) => (
       <li 
         key={i} 
         id={i}
-        onClick={() => {
-          this.setState({squares: history[i].squares})
-        }}
+        onClick={() => {this.returnToPhase(i)}}
       >
         <button> Go to phase {i+1}</button>
       </li>
