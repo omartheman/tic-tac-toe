@@ -19,12 +19,7 @@ class Game extends React.Component {
     const squares = this.state.squares.slice(); 
     let {currentPhase} = this.state;
     currentPhase++;
-    console.log('currentphase handleclick', currentPhase)
-    console.log('currentPhase % 2 in handleclick', currentPhase % 2 )
-    //STOP currentPhase should come from another piece of state, not from a ++. 
     const history = this.state.history.slice(0, currentPhase);
-    console.log('history.length',history.length)
-      // history constant only takes history up to currentPhase. This means that if we click a square after selecting a previous phase, the new history will only go up to everything before the current phase. 
     if (calculateWinner(squares) || squares[i]){return}
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
@@ -36,14 +31,11 @@ class Game extends React.Component {
   }
   returnToPhase(i){
     const {history} = this.state;
-    console.log('currentPhase % 2', i % 2 )
-    console.log('return to phase i:',i)
-    //STOP: currentPhase changes when I click same phase twice. 
     this.setState({
       squares: history[i].squares,
       currentPhase: i,
       xIsNext: i % 2 ? true : false
-    }, ()=>{console.log('xisnext:', this.state.xIsNext)});
+    });
   }
   render() {
     const {squares, history} = this.state;
