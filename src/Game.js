@@ -10,7 +10,7 @@ class Game extends React.Component {
       squares: Array(9).fill(null),
       xIsNext: true,
       history: [],
-      currentPhase: null
+      currentPhase: -1
     }
     this.handleClick = this.handleClick.bind(this);
     this.returnToPhase = this.returnToPhase.bind(this);
@@ -19,8 +19,12 @@ class Game extends React.Component {
     const squares = this.state.squares.slice(); 
     let {currentPhase} = this.state;
     currentPhase++;
-    console.log('currentphase', currentPhase)
+    console.log('currentphase handleclick', currentPhase)
+    console.log('currentPhase % 2 in handleclick', currentPhase % 2 )
+    //STOP currentPhase should come from another piece of state, not from a ++. 
     const history = this.state.history.slice(0, currentPhase);
+    console.log('history.length',history.length)
+      // history constant only takes history up to currentPhase. This means that if we click a square after selecting a previous phase, the new history will only go up to everything before the current phase. 
     if (calculateWinner(squares) || squares[i]){return}
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
@@ -32,10 +36,14 @@ class Game extends React.Component {
   }
   returnToPhase(i){
     const {history} = this.state;
+    console.log('currentPhase % 2', i % 2 )
+    console.log('return to phase i:',i)
+    //STOP: currentPhase changes when I click same phase twice. 
     this.setState({
       squares: history[i].squares,
-      currentPhase: i
-    });
+      currentPhase: i,
+      xIsNext: i % 2 ? true : false
+    }, ()=>{console.log('xisnext:', this.state.xIsNext)});
   }
   render() {
     const {squares, history} = this.state;
@@ -45,24 +53,28 @@ class Game extends React.Component {
         key={i} 
         id={i}
         onClick={() => {this.returnToPhase(i)}}
+        className="mb-2"
       >
-        <button> Go to phase {i+1}</button>
+        <button className="btn btn-outline-success">Go to Move #{i+1}</button>
       </li>
     ))
 
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board 
-            squares={this.state.squares}
-            handleClick={this.handleClick}
-          />
-        </div>
-        <div className="game-info">
-          <div className="status">{status}</div>
-          <ol>{/* TODO Add phases here */}
-            {phases}
-          </ol>
+      <div className="mt-3 ml-3 container">
+        <h1>Tic-Tac-Toe</h1>
+        <div className="game container mt-5">
+          <div className="game-board">
+            <Board 
+              squares={this.state.squares}
+              handleClick={this.handleClick}
+            />
+          </div>
+          <div className="game-info">
+            <div className="status">{status}</div>
+            <ol>{/* TODO Add phases here */}
+              {phases}
+            </ol>
+          </div>
         </div>
       </div>
     );
