@@ -47,7 +47,7 @@ class Game extends React.Component {
         onClick={() => {this.returnToPhase(i)}}
         className="mb-2"
       >
-        <button className="btn btn-outline-success">Go to Move #{i+1}</button>
+        <button className="btn btn-outline-dark">Go to Move #{i+1}</button>
       </li>
     ))
 
@@ -68,6 +68,7 @@ class Game extends React.Component {
             </ol>
           </div>
         </div>
+        <div className="site-background"></div>
       </div>
     );
   }

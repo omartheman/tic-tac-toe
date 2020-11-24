@@ -1,6 +1,7 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
+  background-color: pink !important;
 }
 
 ol, ul {
@@ -37,6 +38,15 @@ ol, ul {
 
 .square:focus {
   outline: none;
+}
+.site-background{
+  background: linear-gradient(#de64e6, #a8afff);
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 .kbd-navigation .square:focus {
